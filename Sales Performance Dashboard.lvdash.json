@@ -1,0 +1,310 @@
+{
+  "datasets": [
+    {
+      "name": "4a76cfbc",
+      "displayName": "customer_sales_gold",
+      "config": {
+        "version": "1.1",
+        "source": "harshadatabricksdebt.default.customer_sales_gold",
+        "dimensions": [
+          {
+            "expr": "source.*"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "f2493f73",
+      "displayName": "Customer Sales Performance Summary",
+      "queryLines": [
+        "SELECT\r\n",
+        "    customer_name,\r\n",
+        "    order_count,\r\n",
+        "    total_sales,\r\n",
+        "    average_order_value\r\n",
+        "FROM harshadatabricksdebt.default.customer_sales_gold\r\n",
+        "ORDER BY total_sales DESC;"
+      ]
+    },
+    {
+      "name": "ed6a211d",
+      "displayName": "Aggregated Customer Sales Total Revenue Summary",
+      "queryLines": [
+        "SELECT\r\n",
+        "    SUM(total_sales) AS total_revenue\r\n",
+        "FROM harshadatabricksdebt.default.customer_sales_gold;"
+      ]
+    },
+    {
+      "name": "d3635ed0",
+      "displayName": "Total Sales Order Summary",
+      "queryLines": [
+        "SELECT\r\n",
+        "    SUM(order_count) AS total_orders\r\n",
+        "FROM harshadatabricksdebt.default.customer_sales_gold;"
+      ]
+    },
+    {
+      "name": "e9ba12d4",
+      "displayName": "Customer Count Summary From Sales Data",
+      "queryLines": [
+        "SELECT\r\n",
+        "    COUNT(*) AS total_customers\r\n",
+        "FROM harshadatabricksdebt.default.customer_sales_gold;"
+      ]
+    },
+    {
+      "name": "59bcf72e",
+      "displayName": "Average Value Per Customer Order Calculation",
+      "queryLines": [
+        "SELECT\r\n",
+        "    SUM(total_sales) / SUM(order_count) AS average_order_value\r\n",
+        "FROM harshadatabricksdebt.default.customer_sales_gold;"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "38c50c77",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "63e3b630",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f2493f73",
+                  "fields": [
+                    {
+                      "name": "customer_name",
+                      "expression": "`customer_name`"
+                    },
+                    {
+                      "name": "total_sales",
+                      "expression": "`total_sales`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "showDescription": true
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "customer_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "total_sales",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 0,
+            "width": 9,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "total_revenue_kpi",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ed6a211d",
+                  "fields": [
+                    {
+                      "name": "sum(total_revenue)",
+                      "expression": "SUM(`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Revenue"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_revenue)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "40c3bab1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "e9ba12d4",
+                  "fields": [
+                    {
+                      "name": "sum(total_customers)",
+                      "expression": "SUM(`total_customers`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Customers"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_customers)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 7,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "total-orders",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "d3635ed0",
+                  "fields": [
+                    {
+                      "name": "sum(total_orders)",
+                      "expression": "SUM(`total_orders`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Orders"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_orders)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 7,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "0e9bea32",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "59bcf72e",
+                  "fields": [
+                    {
+                      "name": "sum(average_order_value)",
+                      "expression": "SUM(`average_order_value`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(average_order_value)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 7,
+            "width": 3,
+            "height": 3
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}

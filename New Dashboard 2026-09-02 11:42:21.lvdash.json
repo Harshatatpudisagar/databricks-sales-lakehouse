@@ -1,0 +1,66 @@
+{
+  "datasets": [
+    {
+      "name": "cc00af82",
+      "displayName": "machine_readings",
+      "config": {
+        "version": "1.1",
+        "source": "harshadatabricksdebt.machine_kafka.machine_readings",
+        "dimensions": [
+          {
+            "expr": "source.*"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "name": "9ae790c4",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "87d3692a",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "cc00af82",
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {}
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 0,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
